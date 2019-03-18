@@ -1,0 +1,24 @@
+tutorial_blog_homepage:
+    path:     /
+    defaults: { _controller: TutorialBlogBundle:Default:index }
+
+Create_post:
+    path:     /addpost
+    defaults: { _controller: TutorialBlogBundle:Blog:add }
+
+list_post:
+    path:     /postslist
+    defaults: { _controller: TutorialBlogBundle:Blog:listpost }
+
+update_post:
+    path:     /updatepost/{id}
+    defaults: { _controller: TutorialBlogBundle:Blog:updatepost }
+
+delete_post:
+    path:     /deletepost/{id}
+    defaults: { _controller: TutorialBlogBundle:Blog:deletepost }
+
+
+detailed_post:
+    path:     /detailedpost/{id}
+    defaults: { _controller: TutorialBlogBundle:Blog:showdetailed }
