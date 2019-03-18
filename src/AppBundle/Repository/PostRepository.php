@@ -9,4 +9,16 @@ use Doctrine\ORM\Query;
 class PostRepository extends EntityRepository
 {
 
+public function findEntitiesByString($str)
+{
+    return $this->getEntityManager()
+        ->createQuery(
+            'SELECT p
+            FROM AppBundle:Post p
+            WHERE p.title LIKE :str'
+        )
+        ->setParameter('str', '%'.$str.'%')
+        ->getResult();
+}
+
 }

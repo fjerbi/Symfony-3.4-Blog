@@ -22,3 +22,7 @@ delete_post:
 detailed_post:
     path:     /detailedpost/{id}
     defaults: { _controller: TutorialBlogBundle:Blog:showdetailed }
+
+ajax_search:
+    path:     /search
+    defaults: { _controller: TutorialBlogBundle:Blog:search }

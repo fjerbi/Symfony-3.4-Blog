@@ -2,9 +2,13 @@
 
 namespace Tutorial\BlogBundle\Controller;
 use AppBundle\Entity\Post;
-use Tutorial\BlogBundle\Form\PostType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Tutorial\BlogBundle\Form\PostType;
 
 class BlogController extends Controller
 {
@@ -89,4 +93,26 @@ public function showdetailedAction($id)
         'id'=>$p->getId()
     ));
 }
+
+    public function searchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $posts =  $em->getRepository('AppBundle:Post')->findEntitiesByString($requestString);
+        if(!$posts) {
+            $result['posts']['error'] = "Post Not found :( ";
+        } else {
+            $result['posts'] = $this->getRealEntities($posts);
+        }
+        return new Response(json_encode($result));
+    }
+    public function getRealEntities($posts){
+        foreach ($posts as $posts){
+            $realEntities[$posts->getId()] = [$posts->getPhoto(),$posts->getTitle()];
+
+        }
+        return $realEntities;
+    }
+
+
 }
