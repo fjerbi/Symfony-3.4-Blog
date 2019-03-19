@@ -1,9 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Create Your Post !!</h1>
+   <center><h2 class="contact-title">
+        <br><br>
+      Create your Post !
+    </h2></center>
+    <div class="form-group has-error">
     {{ form_start(Form) }}
 
-
-    {{ form_end(Form) }}
+        {{ form_widget(Form.title,{'attr':{'type':'text','class':'form-control','placeholder':'Title...'}}) }}
+        <br> <br> <br>
+        {{ form_widget(Form.description,{'attr':{'type':'textarea','class':'form-control','placeholder':'Description...'}}) }}
+        <br> <br> <br>
+        {{ form_widget(Form.photo,{'attr':{'type':'text','class':'form-control','placeholder':'photo...'}}) }}
+        <br> <br> <br>
+   <center> {{ form_widget(Form.Submit,{'attr':{'type':'text','class':'btn btn-common','placeholder':'Submit...'}}) }}        </center>
+        <br> <br> <br>
+        {{ form_end(Form) }}
+    </div>
 {% endblock %}

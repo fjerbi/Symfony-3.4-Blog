@@ -1,13 +1,18 @@
 {%  extends 'base.html.twig' %}
+
 {% block body %}
+
     <h1>Lists of Posts !</h1>
 
     <div class="album py-5 bg-light">
         <div class="container">
 
 <h2>Search A Post !!</h2>
+
             <div class="sidebar-search">
+
                 <div class="input-group custom-search-form">
+
                     <input type="text" id="search" class="form-control" placeholder="Search here">
                 </div>
                 <!-- /input-group -->
@@ -18,7 +23,7 @@
                     <ul class="nav nav-second-level" id="entitiesNav">
                     </ul>
                 </li>
-            </ul>
+            </ul><br><br><br><br>
 
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -63,30 +68,78 @@
                     });
                 });
             </script>
-
+<div class="post-container">
             <div class="row">
-                {% for posts in posts %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" src="{{ asset('uploads/post/' ~ posts.photo) }}" alt="Card image cap">
-                            <div class="card-body">
-                                <p class="card-text">{{ posts.description }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a href="{{ path('update_post',{'id': posts.id}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">Update</button></a>
-                                        <a href="{{ path('delete_post',{'id': posts.id}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></a>
-                                        <a href="{{ path('detailed_post',{'id': posts.id}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
 
+                {% for posts in posts %}
+
+                    <section class="featured section-padding">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <div class="heading">
+                                        <h1 class="section-title">Latest Posts</h1>
+                                        <h4 class="sub-title">You can also post your own thoughts</h4>
                                     </div>
-                                    <small class="text-muted">{{ posts.postdate|date() }}</small>
                                 </div>
+
+
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="featured-box">
+                                        <figure>
+                                            <div class="homes-tag featured">Blog</div>
+                                            <div class="homes-tag rent"><i class="lni-heart"></i> 202</div>
+                                            <span class="price-save">
+$200
+</span>
+                                            <a href="{{ path('detailed_post',{'id': posts.id}) }}"><img class="img-fluid" src="{{ asset('uploads/post/' ~ posts.photo) }}" alt=""></a>
+                                        </figure>
+                                        <div class="content-wrapper">
+                                            <div class="feature-content">
+                                                <h4><a href="{{ path('detailed_post',{'id': posts.id}) }}">{{ posts.title }}</a></h4>
+                                                <p class="listing-tagline">{{ posts.description|trim }}</p>
+                                                <div class="meta-tag">
+                                                    <div class="listing-review">
+                                                        <span class="review-avg">4.5</span>
+                                                        2 Ratings
+                                                    </div>
+                                                    <div class="user-name">
+                                                        <a href="#"><i class="lni-user"></i> Jone</a>
+                                                    </div>
+                                                    <div class="listing-category">
+                                                        <a href="#"><i class="lni-alarm-clock"></i>{{ posts.postdate|date() }} </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="listing-bottom clearfix">
+                                                <div class="btn-group">
+
+                                                    <a href="{{ path('update_post',{'id': posts.id}) }}"><button type="button" class="btn btn-sm btn-outline-info">Update</button></a>
+                                                    <a href="{{ path('delete_post',{'id': posts.id}) }}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                                                    <a href="{{ path('detailed_post',{'id': posts.id}) }}"><button type="button" class="btn btn-sm btn-outline-primary">View</button></a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
-                    </div>
+
+                    </section>
+
                 {% endfor %}
+
             </div>
 
         </div>
     </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
 
 {% endblock %}

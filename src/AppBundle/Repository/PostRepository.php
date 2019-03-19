@@ -20,5 +20,15 @@ public function findEntitiesByString($str)
         ->setParameter('str', '%'.$str.'%')
         ->getResult();
 }
-
+public function findPostByid($id)
+{
+    return $this->getEntityManager()
+        ->createQuery(
+            "SELECT p
+            FROM AppBundle:Post
+            p WHERE p.id =:id"
+        )
+        ->setParameter('id', $id)
+        ->getOneOrNullResult();
+}
 }

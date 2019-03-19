@@ -32,6 +32,13 @@ class Post
      */
     private $title;
 
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Postcomment", mappedBy="post")
+     */
+    private $comment;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -129,5 +136,19 @@ class Post
     {
         $this->postdate = $postdate;
     }
+    /**
+     * @return mixed
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
 
+    /**
+     * @param mixed $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
 }

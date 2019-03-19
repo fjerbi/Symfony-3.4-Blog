@@ -2,6 +2,7 @@
 
 namespace Tutorial\BlogBundle\Controller;
 use AppBundle\Entity\Post;
+use AppBundle\Entity\Postcomment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -114,5 +115,22 @@ public function showdetailedAction($id)
         return $realEntities;
     }
 
-
+public function addCommentAction(Request $request)
+{
+    $ref= $request->headers->get('referer');
+    $post= $this->getDoctrine()
+        ->getRepository('AppBundle:Post')
+        ->findPostByid($request->request->get('post_id'));
+    $comment = new Postcomment();
+    $comment->setPost($post);
+    $comment->setPostedAt(new \DateTime('now'));
+    $comment->setContent($request->request->get('comment'));
+    $em=$this->getDoctrine()->getManager();
+    $em->persist($comment);
+    $em->flush();
+    $this->addFlash(
+        'info', 'Comment published !'
+    );
+    return $this->redirect($ref);
+}
 }
