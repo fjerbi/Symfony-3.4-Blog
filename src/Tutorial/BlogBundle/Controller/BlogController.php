@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tutorial\BlogBundle\Form\PostType;
@@ -16,6 +17,7 @@ class BlogController extends Controller
 
     public function addAction(Request $request)
     {
+     
         $post = new Post();
         $form= $this->createForm(PostType::class, $post);
         $form->handleRequest($request);

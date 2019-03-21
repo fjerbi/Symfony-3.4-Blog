@@ -71,7 +71,6 @@
 <div class="post-container">
             <div class="row">
 
-                {% for posts in posts %}
 
                     <section class="featured section-padding">
                         <div class="container">
@@ -83,6 +82,7 @@
                                     </div>
                                 </div>
 
+                                {% for posts in posts %}
 
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                     <div class="featured-box">
@@ -123,14 +123,14 @@ $200
                                         </div>
                                     </div>
                                 </div>
-
+                                {% endfor %}
 
                             </div>
                         </div>
 
                     </section>
 
-                {% endfor %}
+
 
             </div>
 

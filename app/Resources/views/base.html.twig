@@ -97,8 +97,12 @@
                         </li>
                     </ul>
                     <div class="header-top-right float-right">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('fos_user_security_logout') }}" class="header-top-button"><i class="lni-lock"></i> Log Out</a>
+{% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
                         <a href="{{ path('fos_user_security_login') }}" class="header-top-button"><i class="lni-lock"></i> Log In</a> |
                         <a href="{{ path('fos_user_registration_register') }}" class="header-top-button"><i class="lni-pencil"></i> Register</a>
+                {% endif %}
                     </div>
                     <div class="post-btn">
                         <a class="btn btn-common" href="{{ path('Create_post') }}"><i class="lni-pencil-alt"></i> Post to blog</a>
@@ -137,6 +141,7 @@
                     <h4 class="sub-title">You can also post your own thoughts</h4>
                 </div>
             </div>
+
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                 <div class="featured-box">
                     <figure>
@@ -169,102 +174,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                <div class="featured-box">
-                    <figure>
-                        <div class="homes-tag featured">Cameras</div>
-                        <div class="homes-tag rent"><i class="lni-heart"></i> 202</div>
 
-                        <a href="#"><img class="img-fluid" src="{{ asset('uploads/post/1d73f1be5e7ba08a6b014fe795d80b9a.jpeg') }}" alt=""></a>
-                    </figure>
-                    <div class="content-wrapper">
-                        <div class="feature-content">
-                            <h4><a href="ads-details.html">Canon SX Powershot ...</a></h4>
-                            <p class="listing-tagline">Club and shop for you</p>
-                            <div class="meta-tag">
-                                <div class="listing-review">
-                                    <span class="review-avg">4.5</span>
-                                    2 Ratings
-                                </div>
-                                <div class="user-name">
-                                    <a href="#"><i class="lni-user"></i> Jone</a>
-                                </div>
-                                <div class="listing-category">
-                                    <a href="#"><i class="lni-display"></i>Electronic </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="listing-bottom clearfix">
-                            <a href="#" class="float-left"><i class="lni-map-marker"></i> New York, US</a>
-                            <a href="ads-details.html" class="float-right">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                <div class="featured-box">
-                    <figure>
-                        <div class="homes-tag featured">Cameras</div>
-                        <div class="homes-tag rent"><i class="lni-heart"></i> 202</div>
 
-                        <a href="#"><img class="img-fluid" src="{{ asset('uploads/post/1d73f1be5e7ba08a6b014fe795d80b9a.jpeg') }}" alt=""></a>
-                    </figure>
-                    <div class="content-wrapper">
-                        <div class="feature-content">
-                            <h4><a href="ads-details.html">Canon SX Powershot ...</a></h4>
-                            <p class="listing-tagline">Club and shop for you</p>
-                            <div class="meta-tag">
-                                <div class="listing-review">
-                                    <span class="review-avg">4.5</span>
-                                    2 Ratings
-                                </div>
-                                <div class="user-name">
-                                    <a href="#"><i class="lni-user"></i> Jone</a>
-                                </div>
-                                <div class="listing-category">
-                                    <a href="#"><i class="lni-display"></i>Electronic </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="listing-bottom clearfix">
-                            <a href="#" class="float-left"><i class="lni-map-marker"></i> New York, US</a>
-                            <a href="ads-details.html" class="float-right">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                <div class="featured-box">
-                    <figure>
-                        <div class="homes-tag featured">Cameras</div>
-                        <div class="homes-tag rent"><i class="lni-heart"></i> 202</div>
 
-                        <a href="#"><img class="img-fluid" src="{{ asset('uploads/post/1d73f1be5e7ba08a6b014fe795d80b9a.jpeg') }}" alt=""></a>
-                    </figure>
-                    <div class="content-wrapper">
-                        <div class="feature-content">
-                            <h4><a href="ads-details.html">Canon SX Powershot ...</a></h4>
-                            <p class="listing-tagline">Club and shop for you</p>
-                            <div class="meta-tag">
-                                <div class="listing-review">
-                                    <span class="review-avg">4.5</span>
-                                    2 Ratings
-                                </div>
-                                <div class="user-name">
-                                    <a href="#"><i class="lni-user"></i> Jone</a>
-                                </div>
-                                <div class="listing-category">
-                                    <a href="#"><i class="lni-display"></i>Electronic </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="listing-bottom clearfix">
-                            <a href="#" class="float-left"><i class="lni-map-marker"></i> New York, US</a>
-                            <a href="ads-details.html" class="float-right">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
                     </div>
                 </div>
