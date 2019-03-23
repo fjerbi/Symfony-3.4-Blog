@@ -9,26 +9,62 @@ use Doctrine\ORM\Query;
 class PostRepository extends EntityRepository
 {
 
-public function findEntitiesByString($str)
-{
-    return $this->getEntityManager()
-        ->createQuery(
-            'SELECT p
-            FROM AppBundle:Post p
-            WHERE p.title LIKE :str'
-        )
-        ->setParameter('str', '%'.$str.'%')
-        ->getResult();
-}
-public function findPostByid($id)
-{
-    return $this->getEntityManager()
-        ->createQuery(
-            "SELECT p
+    /**
+     * get all posts
+     *
+     * @return array
+     */
+    public function findAllPosts()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a
+         FROM AppBundle:Post a
+      
+         ORDER BY a.posted_at DESC'
+            )
+            ->getArrayResult();
+    }
+
+    /**
+     * get one by id
+     *
+     * @param integer $id
+     *
+     * @return array
+     */
+    public function findOneById($id)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT a, u.username
+       FROM AppBundle:Annonce
+       a JOIN a.user u
+        WHERE a.id = id"
+            )
+            ->setParameter('id', $id)
+            ->getArrayResult();
+    }
+
+
+    /**
+     * get one by id
+     *
+     * @param integer $id
+     *
+     * @return object or null
+     */
+    public function findPostByid($id)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT p
             FROM AppBundle:Post
             p WHERE p.id =:id"
-        )
-        ->setParameter('id', $id)
-        ->getOneOrNullResult();
-}
+            )
+            ->setParameter('id', $id)
+            ->getOneOrNullResult();
+    }
+
+
 }

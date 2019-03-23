@@ -89,9 +89,7 @@
                                         <figure>
                                             <div class="homes-tag featured">Blog</div>
                                             <div class="homes-tag rent"><i class="lni-heart"></i> 202</div>
-                                            <span class="price-save">
-$200
-</span>
+
                                             <a href="{{ path('detailed_post',{'id': posts.id}) }}"><img class="img-fluid" src="{{ asset('uploads/post/' ~ posts.photo) }}" alt=""></a>
                                         </figure>
                                         <div class="content-wrapper">
@@ -104,7 +102,7 @@ $200
                                                         2 Ratings
                                                     </div>
                                                     <div class="user-name">
-                                                        <a href="#"><i class="lni-user"></i> Jone</a>
+                                                        <a href="#"><i class="lni-user"></i>{{ posts.creator }}</a>
                                                     </div>
                                                     <div class="listing-category">
                                                         <a href="#"><i class="lni-alarm-clock"></i>{{ posts.postdate|date() }} </a>

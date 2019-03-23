@@ -1,23 +1,57 @@
 <?php
-
+// src/AppBundle/Entity/User.php
 
 namespace AppBundle\Entity;
 
-
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Postcomment
- *
+ * @ORM\Entity(repositoryClass="BlogBundle\Repository\PostcommentRepository")
  * @ORM\Table(name="postcomment")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 
 class Postcomment
 {
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text", unique=false)
+     */
+    private $content;
+
+
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="comments",cascade={"remove"})
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     */
+    private $post;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @Assert\DateTime
+     */
+    private $posted_at;
+
+
+    /**
+     * @ORM\PrePersist
+     */
+
+    public function setPostedAt()
+    {
+        $this->posted_at = new \DateTime('now');
+    }
 
     /**
      * @ORM\Id
@@ -27,17 +61,6 @@ class Postcomment
 
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $content;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="postdate", type="date")
-     */
-    private $posted_at;
     /**
      * @return mixed
      */
@@ -55,7 +78,7 @@ class Postcomment
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getContent()
     {
@@ -63,29 +86,30 @@ class Postcomment
     }
 
     /**
-     * @param mixed $content
+     * @param string $content
      */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+
+
     /**
-     * @return \DateTime
+     * @return mixed
      */
-    public function getPostedAt()
+    public function getUser()
     {
-        return $this->posted_at;
+        return $this->user;
     }
 
     /**
-     * @param \DateTime $posted_at
+     * @param mixed $user
      */
-    public function setPostedAt($posted_at)
+    public function setUser($user)
     {
-        $this->posted_at = $posted_at;
+        $this->user = $user;
     }
-
     /**
      * @return mixed
      */
@@ -93,7 +117,6 @@ class Postcomment
     {
         return $this->post;
     }
-
     /**
      * @param mixed $post
      */
@@ -102,10 +125,7 @@ class Postcomment
         $this->post = $post;
     }
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="comment")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     */
-    private $post;
-
 }
+
+
+

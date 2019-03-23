@@ -26,6 +26,11 @@ detailed_post:
 ajax_search:
     path:     /search
     defaults: { _controller: TutorialBlogBundle:Blog:search }
+
+
 add_comment:
     path:     /addcomment
     defaults: { _controller: TutorialBlogBundle:Blog:addComment }
+delete_comment:
+    path:     /deletecomment
+    defaults: { _controller: TutorialBlogBundle:Blog:deletecomment }

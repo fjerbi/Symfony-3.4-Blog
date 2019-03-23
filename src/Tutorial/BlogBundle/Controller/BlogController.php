@@ -3,6 +3,7 @@
 namespace Tutorial\BlogBundle\Controller;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Postcomment;
+use AppBundle\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,14 +11,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Tutorial\BlogBundle\Form\PostType;
+
 
 class BlogController extends Controller
 {
 
     public function addAction(Request $request)
     {
-     
+
         $post = new Post();
         $form= $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -30,6 +33,7 @@ class BlogController extends Controller
             $filename= md5(uniqid()) . '.' . $file->guessExtension();
             $file->move($this->getParameter('photos_directory'), $filename);
             $post->setPhoto($filename);
+            $post->setCreator($this->getUser());
             $post->setPostdate(new \DateTime('now'));
 
             $em->persist($post);
@@ -93,6 +97,8 @@ public function showdetailedAction($id)
         'date'=>$p->getPostdate(),
         'photo'=>$p->getPhoto(),
         'descripion'=>$p->getDescription(),
+        'posts'=>$p,
+        'comments'=>$p,
         'id'=>$p->getId()
     ));
 }
@@ -116,23 +122,46 @@ public function showdetailedAction($id)
         }
         return $realEntities;
     }
+    public function addCommentAction(Request $request, UserInterface $user)
+    {
+        //if ($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY')) {
+        //   return new RedirectResponse('/login');
+        //}
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'unable to access this page.');
 
-public function addCommentAction(Request $request)
+        $ref = $request->headers->get('referer');
+
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->findPostByid($request->request->get('post_id'));
+
+        $comment = new Postcomment();
+
+        $comment->setUser($user);
+        $comment->setPost($post);
+        $comment->setContent($request->request->get('comment'));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($comment);
+        $em->flush();
+
+        $this->addFlash(
+            'info', 'Comment published !.'
+        );
+
+        return $this->redirect($ref);
+
+    }
+public function deletecommentAction( Request $request)
 {
-    $ref= $request->headers->get('referer');
-    $post= $this->getDoctrine()
-        ->getRepository('AppBundle:Post')
-        ->findPostByid($request->request->get('post_id'));
-    $comment = new Postcomment();
-    $comment->setPost($post);
-    $comment->setPostedAt(new \DateTime('now'));
-    $comment->setContent($request->request->get('comment'));
-    $em=$this->getDoctrine()->getManager();
-    $em->persist($comment);
-    $em->flush();
-    $this->addFlash(
-        'info', 'Comment published !'
-    );
-    return $this->redirect($ref);
+  $ref = $request->headers->get('referer');
+  $id=$request->get('id');
+  $em= $this->getDoctrine()->getManager();
+  $comment= $em
+      ->getRepository("AppBundle:Postcomment")
+      ->find($id);
+  $em->remove($comment);
+  $em->flush();
+  return $this->redirect($ref);
 }
+
 }

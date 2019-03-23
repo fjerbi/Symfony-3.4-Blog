@@ -9,11 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Post
- *
- * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
+ * @ORM\Table(name="post")
+ * @ORM\HasLifecycleCallbacks()
  */
+
 
 class Post
 {
@@ -35,11 +35,6 @@ class Post
 
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Postcomment", mappedBy="post")
-     */
-    private $comment;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $description;
@@ -50,6 +45,53 @@ class Post
      */
     private $photo;
 
+    /**
+     * @return mixed
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param mixed $creator
+     */
+    public function setCreator($creator)
+    {
+        $this->creator = $creator;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     *@ORM\JoinColumn(name="creator", referencedColumnName="id")
+     */
+    private $creator;
+
+    /**
+     * @param \DateTime $postdate
+     */
+    public function setPostdate($postdate)
+    {
+        $this->postdate = $postdate;
+    }
 
     /**
      * @var \DateTime
@@ -57,6 +99,11 @@ class Post
      * @ORM\Column(name="postdate", type="date")
      */
     private $postdate;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Postcomment", mappedBy="post",cascade={"remove"}, orphanRemoval=true)
+     */
+    private $comments;
 
     /**
      * @return mixed
@@ -129,26 +176,4 @@ class Post
         return $this->postdate;
     }
 
-    /**
-     * @param \DateTime $postdate
-     */
-    public function setPostdate($postdate)
-    {
-        $this->postdate = $postdate;
-    }
-    /**
-     * @return mixed
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * @param mixed $comment
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
 }
