@@ -151,17 +151,14 @@ public function showdetailedAction($id)
         return $this->redirect($ref);
 
     }
-public function deletecommentAction( Request $request)
-{
-  $ref = $request->headers->get('referer');
-  $id=$request->get('id');
-  $em= $this->getDoctrine()->getManager();
-  $comment= $em
-      ->getRepository("AppBundle:Postcomment")
-      ->find($id);
-  $em->remove($comment);
-  $em->flush();
-  return $this->redirect($ref);
-}
 
+public function deleteCommentAction(Request $request)
+{
+    $id = $request->get('id');
+    $em= $this->getDoctrine()->getManager();
+    $comment=$em->getRepository('AppBundle:Postcomment')->find($id);
+    $em->remove($comment);
+    $em->flush();
+    return $this->redirectToRoute('list_post');
+}
 }

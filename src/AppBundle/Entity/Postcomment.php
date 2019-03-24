@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="BlogBundle\Repository\PostcommentRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PostcommentRepository")
  * @ORM\Table(name="postcomment")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -27,7 +27,7 @@ class Postcomment
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="comments",cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="comments")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
     private $post;

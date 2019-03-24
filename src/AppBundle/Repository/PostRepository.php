@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Post;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
 
 class PostRepository extends EntityRepository
@@ -56,15 +57,27 @@ class PostRepository extends EntityRepository
      */
     public function findPostByid($id)
     {
+        try {
+            return $this->getEntityManager()
+                ->createQuery(
+                    "SELECT p
+                FROM AppBundle:Post
+                p WHERE p.id =:id"
+                )
+                ->setParameter('id', $id)
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+        }
+    }
+    public function findEntitiesByString($str){
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT p
-            FROM AppBundle:Post
-            p WHERE p.id =:id"
+                'SELECT p
+                FROM AppBundle:Post p
+                WHERE p.title LIKE :str'
             )
-            ->setParameter('id', $id)
-            ->getOneOrNullResult();
+            ->setParameter('str', '%'.$str.'%')
+            ->getResult();
     }
-
 
 }

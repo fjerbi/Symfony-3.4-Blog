@@ -32,5 +32,5 @@ add_comment:
     path:     /addcomment
     defaults: { _controller: TutorialBlogBundle:Blog:addComment }
 delete_comment:
-    path:     /deletecomment
-    defaults: { _controller: TutorialBlogBundle:Blog:deletecomment }
+    path:     /deletecomment/{id}
+    defaults: { _controller: TutorialBlogBundle:Blog:deleteComment }
