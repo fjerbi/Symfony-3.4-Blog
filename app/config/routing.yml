@@ -1,3 +1,7 @@
+tutorial_user:
+    resource: "@TutorialUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 tutorial_blog:
     resource: "@TutorialBlogBundle/Resources/config/routing.yml"
     prefix:   /

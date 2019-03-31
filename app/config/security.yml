@@ -3,8 +3,10 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
+
         ROLE_USER:  ROLE_USER
         ROLE_ADMIN: ROLE_ADMIN
+
 
     providers:
         fos_userbundle:
@@ -13,10 +15,16 @@ security:
     firewalls:
         main:
             pattern: ^/
-             #user_checker: fos_user.user_checker
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                success_handler: redirect.after.login
+
+
+                # if you are using Symfony < 2.8, use the following config instead:
+                # csrf_provider: form.csrf_provider
+            remember_me:
+                secret: '%secret%'
 
             logout:       true
             anonymous:    true
@@ -25,4 +33,7 @@ security:
     - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/admin/, role: ROLE_ADMIN }
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/registration-form-submission$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/(login|register)$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+

@@ -34,4 +34,6 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
-  
+
+    redirect.after.login:
+        class: Tutorial\UserBundle\Redirection\AfterLoginRedirection
